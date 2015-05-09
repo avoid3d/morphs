@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="" ng-app="morphs">
 
 <head>
     <meta charset="utf-8">
@@ -21,7 +21,7 @@
     -->
 
     <script src="build/bower-dependencies.min.js"></script>
-    <script src="bulid/morphs.min.js"></script>
+    <script src="build/morphs.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +30,8 @@
         <![endif]-->
 
     <!-- Add your site or application content here -->
-    <p>Hello world! This is HTML5 Boilerplate.</p>
+    <m-nav></m-nav>
+    <ui-view="base"></ui-view="base">
 </body>
 
 </html>
