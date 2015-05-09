@@ -68,3 +68,6 @@ frontend/bower_components
 
 # Python virtualenv
 backend/venv
+
+# Grunt build dir
+frontend/build
