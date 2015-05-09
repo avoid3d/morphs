@@ -58,3 +58,7 @@ target/
 
 # Npm modules
 frontend/node_modules
+
+# Sublime stuff
+*.sublime-project
+*.sublime-workspace
