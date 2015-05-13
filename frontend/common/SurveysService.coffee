@@ -6,7 +6,7 @@ morphs.service 'SurveysService', class SurveysService
 
   refresh: ->
     @Restangular
-      .one 'user', 0 #user_id
+      .one 'users', 0 #user_id
       .all 'surveys'
       .getList()
       .then (surveys) ->
