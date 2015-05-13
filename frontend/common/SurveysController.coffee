@@ -1,7 +1,6 @@
 morphs = window.angular.module 'morphs'
 
-class SurveysController
-  constructor: ($scope) ->
-    $scope.surveys = []
-
-morphs.controller 'SurveysController', SurveysController
+morphs.controller 'SurveysController', class SurveysController
+  constructor: ($scope, SurveysService) ->
+    $scope.surveys = SurveysService.surveys
+    SurveysService.refresh()

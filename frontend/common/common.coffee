@@ -1,5 +1,6 @@
 morphs = window.angular.module 'morphs', [
   'ui.router',
+  'restangular',
   'nav',
 ]
 
