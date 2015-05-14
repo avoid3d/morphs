@@ -1,15 +1,26 @@
 morphs = window.angular.module 'morphs'
 
 morphs.service 'SurveysService', class SurveysService
-  constructor: (@Restangular) ->
-    @surveys = ['hello']
+  constructor: (@Restangular, @UserService) ->
+    @surveys = []
 
-  refresh: ->
+  refresh: =>
     @Restangular
-      .one 'users', 0 #user_id
+      .one 'users', @UserService.user.id_
       .all 'surveys'
       .getList()
-      .then (surveys) ->
+      .then (surveys) =>
         window.angular.copy surveys, @surveys
       , (error) ->
         console.log error
+
+  create_survey: (survey_data) =>
+    promise = @Restangular
+      .one 'users', @UserService.user.id_
+      .all 'surveys'
+      .post (survey_data)
+
+    promise.then (survey) =>
+        @refresh()
+
+    return promise

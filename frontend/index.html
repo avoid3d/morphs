@@ -20,6 +20,7 @@
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
     -->
 
+    <link rel="stylesheet" href="build/bower-dependencies.css"></link>
     <script src="build/bower-dependencies.min.js"></script>
     <script src="build/morphs.min.js"></script>
 </head>
@@ -29,8 +30,7 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <m-nav></m-nav>
+    <m-nav ng-controller="NavController"></m-nav>
     <div ui-view=></div>
 </body>
 

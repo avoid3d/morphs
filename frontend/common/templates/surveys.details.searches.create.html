@@ -1,0 +1,26 @@
+<div class="col-md-6 col-md-offset-3" style="padding-top: 10px">
+    <div class="panel panel-default">
+        <div class="panel-heading">Add search</div>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <label for="nameInput">Name</label>
+                    <input ng-model="ctrl.create_search_form.name" type="text" class="form-control" id="nameInput" placeholder="Enter a name for the search">
+                </div>
+
+                <div class="form-group">
+                    <label for="commentsInput">Comments</label>
+                    <input ng-model="ctrl.create_search_form.comments" type="text" class="form-control" id="commentsInput" placeholder="Describe the search">
+                </div>
+
+                <div class="form-group">
+                    <label for="searchQueryInput">Search Query</label>
+                    <input ng-model="ctrl.create_search_form.search_query" type="text" class="form-control" id="searchQueryInput" placeholder="Search query for Google Image Search">
+                </div>
+
+                <button ng-click="$state.go('surveys.details.searches.list', {survey_id: $stateParams.survey_id})" type="submit" class="btn btn-default">Cancel (back)</button>
+                <button ng-click="ctrl.create_search()" type="submit" class="btn btn-primary pull-right">Add search</button>
+            </form>
+        </div>
+    </div>
+</div>

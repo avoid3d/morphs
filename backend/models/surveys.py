@@ -9,7 +9,9 @@ class Survey(db.Model, Entity):
   __tablename__ = 'surveys'
 
   marshaller = {
+    'id_': fields.Integer,
     'name': fields.String,
+    'comments': fields.String,
   }
 
   name = Column(String)
@@ -18,5 +20,6 @@ class Survey(db.Model, Entity):
   user_id = Column(Integer, ForeignKey('users.id_'))
   user = relationship('User')
 
-  #searches = relationship('Search')
+  searches = relationship('Search')
+  search_results = relationship('SearchResult', secondary='searches')
   #fields = relationship('SurveyField')

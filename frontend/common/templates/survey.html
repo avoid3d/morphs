@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{survey.name}}</h3>
+    </div>
+    <div class="panel-body">
+        <p>{{survey.comments}}</p>
+
+        <form>
+            <div ng-repeat="field in survey.fields" class="form-group">
+                <label for="">{{field.label}}</label>
+                <button ng-if="survey.is_mutable" ng-click="ctrl.delete_field(field)" class="btn btn-xs btn-danger pull-right">Delete field</button>
+                <input ng-if="field.field_type=='text'" ng-model="survey.field_values[field.label]" type="text" class="form-control" id="">
+                <select ng-if="field.field_type=='select'" ng-model="survey.field_values[field.label]" class="form-control" ng-options="option for option in field.options"></select>
+            </div>
+        </form>
+    </div>
+</div>

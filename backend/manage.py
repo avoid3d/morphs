@@ -8,8 +8,8 @@ app = create_app('dev')
 manager = Manager(app)
 
 def _make_context():
-    from backend.models import Survey
-    return dict(app=app, db=db, Survey=Survey)
+    from backend.models import Survey, User, Session
+    return dict(app=app, db=db, Survey=Survey, User=User, Session=Session)
 
 manager.add_command("shell", Shell(make_context=_make_context))
 

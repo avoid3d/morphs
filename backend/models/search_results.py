@@ -1,17 +1,18 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
+from flask.ext.restful import fields
 from backend import db
 from backend.models import Entity
 
 
 class SearchResult(db.Model, Entity):
   __tablename__ = 'search_results'
-  # marshaller = {
-  #   user_id:,
-  #   search_id:,
-  #   image_id:,
-  #   visible_link:,
-  #   direct_link:,
-  # }
+  marshaller = {
+     'user_id': fields.Integer,
+     'search_id': fields.Integer,
+     'image_id': fields.Integer,
+     'visible_link': fields.String,
+     'direct_link': fields.String,
+  }
 
   user_id = Column(Integer, ForeignKey('users.id_'))
   #user = relationship(user)

@@ -1,0 +1,12 @@
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ctrl.survey.name}} ({{ctrl.survey.id_}})</div>
+        <div class="panel-body">
+            <ul class="nav nav-tabs">
+                <li role="presentation" ui-sref-active="active"><a ui-sref="surveys.details.search-results({survey_id: $stateParams.survey_id})">Search Results</a></li>
+                <li role="presentation" ui-sref-active="active"><a ui-sref="surveys.details.searches.list({survey_id: $stateParams.survey_id})">Searches</a></li>
+            </ul>
+            <div ui-view></div>
+        </div>
+    </div>
+</div>

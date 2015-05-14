@@ -1,25 +1,35 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         concat: {
-            morphs: {
+            js: {
                 src: [
                     'bower_components/jquery/dist/jquery.min.js',
                     'bower_components/angular/angular.min.js',
                     'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+                    'bower_components/angular-cookie/angular-cookie.min.js',
                     'bower_components/bootstrap/dist/js/bootstrap.min.js',
                     'bower_components/lodash/lodash.min.js',
                     'bower_components/restangular/dist/restangular.min.js',
+                    'bower_components/angular-bootstrap/ui-bootstrap.min.js',
+                    'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
                 ],
                 dest: 'build/bower-dependencies.min.js',
             },
+            css: {
+                src: [
+                    'bower_components/bootstrap/dist/css/bootstrap.css',
+                ],
+                dest: 'build/bower-dependencies.css',
+            }
         },
         coffee: {
             compile: {
                 files: {
                     'build/morphs.js': [
                         'common/common.coffee',
-                        'common/**.*',
+                        'common/**.coffee',
                         'nav/nav.coffee',
+                        'nav/**.coffee',
                     ]
                 }
             }
