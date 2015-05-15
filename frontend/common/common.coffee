@@ -10,7 +10,7 @@ morphs.config (RestangularProvider) ->
   RestangularProvider.setBaseUrl 'http://localhost:5000'
 
 morphs.config ($stateProvider, $urlRouterProvider) ->
-  $urlRouterProvider.otherwise '/'
+  $urlRouterProvider.otherwise '/surveys/list'
 
   $stateProvider.state 'surveys', {
     abstract: 'true'
@@ -38,9 +38,21 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
   }
 
   $stateProvider.state 'surveys.details.search-results', {
+    abstract: true
     url: '/search-results'
+    template: '<div ui-view></div'
+  }
+
+  $stateProvider.state 'surveys.details.search-results.list', {
+    url: '/list'
     templateUrl: 'common/templates/surveys.details.search-results.html'
     controller: 'SearchResultsController'
+  }
+
+  $stateProvider.state 'surveys.details.search-results.details', {
+    url: '/details'
+    templateUrl: 'common/templates/surveys.details.search-results.details.html'
+    controller: 'SearchResultController'
   }
 
   $stateProvider.state 'surveys.details.searches', {

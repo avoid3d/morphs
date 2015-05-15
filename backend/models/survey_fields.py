@@ -7,7 +7,7 @@ from backend.models import Entity
 class SurveyField(db.Model, Entity):
   __tablename__ = 'survey_fields'
   survey_id = Column(Integer, ForeignKey('surveys.id_'))
-  #survey = relationship()
+  survey = relationship('Survey')
 
   label = Column(String)
   field_type = Column(String)

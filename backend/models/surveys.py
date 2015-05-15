@@ -22,4 +22,5 @@ class Survey(db.Model, Entity):
 
   searches = relationship('Search')
   search_results = relationship('SearchResult', secondary='searches')
-  #fields = relationship('SurveyField')
+  
+  fields = relationship('SurveyField')

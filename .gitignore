@@ -71,3 +71,6 @@ backend/venv
 
 # Grunt build dir
 frontend/build
+
+# Chrome extension bower components
+chrome-extension/bower_components

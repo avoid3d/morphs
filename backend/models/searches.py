@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from flask.ext.restful import fields
 from backend import db
@@ -12,9 +12,14 @@ class Search(db.Model, Entity):
     'name': fields.String,
     'comments': fields.String,
     'search_query': fields.String,
+    'are_results_uploaded': fields.Boolean,
   }
 
+  are_results_uploaded = Column(Boolean, default=False) 
+
   survey_id = Column(Integer, ForeignKey('surveys.id_'))
+
+  results = relationship('SearchResult')
 
   name = Column(String)
 

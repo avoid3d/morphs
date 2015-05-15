@@ -1,4 +1,5 @@
-from flask.ext.restful import marshal_with, reqparse
+from flask.ext.restful import marshal_with, reqparse, fields
+from sqlalchemy import func
 from backend import db
 from backend.api import api
 from backend.models import Survey, SearchResult, Search
@@ -27,12 +28,20 @@ def get_surveys_search_results(survey_id):
   survey = Survey.query.filter(Survey.id_==survey_id).first()
   return survey.search_results
 
+marshaller = {'num_results': fields.Integer}
+marshaller.update(Search.marshaller)
+
 @api.route('/surveys/<int:survey_id>/searches')
 @my_jsonify
-@marshal_with(Search.marshaller)
+@marshal_with(marshaller)
 def get_surveys_searches(survey_id):
-  survey = Survey.query.filter(Survey.id_==survey_id).first()
-  return survey.searches
+  query = db.session.query(Search, func.count(SearchResult.id_)).filter(Search.survey_id==survey_id).group_by(Search)
+  searches = []
+  for search, num_results in query.all():
+    search.num_results = num_results
+    searches.append(search)
+
+  return searches
 
 @api.route('/surveys/<int:survey_id>/searches', methods=['POST'])
 @my_jsonify
