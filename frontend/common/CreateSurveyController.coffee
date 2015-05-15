@@ -54,4 +54,4 @@ morphs.controller 'CreateSurveyController', class CreateSurveyController
   create_survey: =>
     @SurveysService.create_survey @create_survey_form
       .then (survey) =>
-        @$state.go 'surveys.details.search-results', {survey_id: survey.id_}
+        @$state.go 'surveys.details.search-results.list', {survey_id: survey.id_}

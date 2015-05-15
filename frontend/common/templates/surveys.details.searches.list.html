@@ -7,16 +7,16 @@
         <th>Name</th>
         <th>Search Query</th>
         <th>Comments</th>
-        <th>Number of Results</th>
+        <th>Action</th>
     </tr>
     <tr ng-repeat="search in ctrl.searches">
         <td>{{search.id_}}</td>
         <td>{{search.name}}</td>
         <td>{{search.search_query}}</td>
         <td>{{search.comments}}</td>
-        <td ng-if="search.are_results_uploaded">{{search.num_results}}</td>
-        <td ng-if="!search.are_results_uploaded">
-            <button ng-click="ctrl.run_search(search)" class="btn btn-xs btn-primary">Run search</button>
+        <td>
+            <span ng-show="search.are_results_uploaded" class="label label-success">Successfully ran search</span>
+            <button ng-show="!search.are_results_uploaded" ng-click="ctrl.run_search(search)" class="btn btn-xs btn-primary">Run search</button>
         </td>
     </tr>
 </table>

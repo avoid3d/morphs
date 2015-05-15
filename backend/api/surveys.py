@@ -28,19 +28,13 @@ def get_surveys_search_results(survey_id):
   survey = Survey.query.filter(Survey.id_==survey_id).first()
   return survey.search_results
 
-marshaller = {'num_results': fields.Integer}
-marshaller.update(Search.marshaller)
-
 @api.route('/surveys/<int:survey_id>/searches')
 @my_jsonify
-@marshal_with(marshaller)
+@marshal_with(Search.marshaller)
 def get_surveys_searches(survey_id):
-  query = db.session.query(Search, func.count(SearchResult.id_)).filter(Search.survey_id==survey_id).group_by(Search)
-  searches = []
-  for search, num_results in query.all():
-    search.num_results = num_results
-    searches.append(search)
-
+  searches = (Search.query
+    .filter(Search.survey_id==survey_id)
+    .all())
   return searches
 
 @api.route('/surveys/<int:survey_id>/searches', methods=['POST'])
