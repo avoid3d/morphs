@@ -6,27 +6,28 @@ morphs = window.angular.module 'morphs', [
   'nav',
 ]
 
-morphs.config (RestangularProvider) ->
-  RestangularProvider.setBaseUrl 'http://localhost:5000'
+morphs.config (RestangularProvider, API_ENDPOINT) ->
+  RestangularProvider.setBaseUrl API_ENDPOINT
 
 morphs.config ($stateProvider, $urlRouterProvider) ->
   $urlRouterProvider.otherwise '/surveys/list'
 
   $stateProvider.state 'surveys', {
+    url: '/surveys'
     abstract: 'true'
     template: '<div ui-view></div'
     is_private: true
   }
 
   $stateProvider.state 'surveys.list', {
-    url: '/surveys/list'
+    url: '/list'
     templateUrl: 'common/templates/list-surveys.html'
     controller: 'SurveysController'
     is_private: true
   }
 
   $stateProvider.state 'surveys.create', {
-    url: '/surveys/create'
+    url: '/create'
     templateUrl: 'common/templates/create-survey.html'
     controller: 'CreateSurveyController'
     is_private: true
@@ -34,7 +35,7 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
 
   $stateProvider.state 'surveys.details', {
     abstract: true
-    url: '/surveys/:survey_id'
+    url: '/:survey_id'
     templateUrl: 'common/templates/survey-details.html'
     controller: 'SurveyDetailsController'
     is_private: true
