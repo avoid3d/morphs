@@ -5,7 +5,7 @@
             <a class="navbar-brand" ui-sref="surveys.list">Morphs</a>
         </div>
 
-        <ul class="nav navbar-nav">
+        <ul ng-show="ctrl.is_signed_in()" class="nav navbar-nav">
             <li ui-sref-active="active"><a ui-sref="surveys.list">All Surveys</a></li>
         </ul>
 
