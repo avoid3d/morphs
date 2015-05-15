@@ -22,12 +22,14 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
     url: '/surveys/list'
     templateUrl: 'common/templates/list-surveys.html'
     controller: 'SurveysController'
+    is_private: true
   }
 
   $stateProvider.state 'surveys.create', {
     url: '/surveys/create'
     templateUrl: 'common/templates/create-survey.html'
     controller: 'CreateSurveyController'
+    is_private: true
   }
 
   $stateProvider.state 'surveys.details', {
@@ -35,24 +37,28 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
     url: '/surveys/:survey_id'
     templateUrl: 'common/templates/survey-details.html'
     controller: 'SurveyDetailsController'
+    is_private: true
   }
 
   $stateProvider.state 'surveys.details.search-results', {
     abstract: true
     url: '/search-results'
     template: '<div ui-view></div'
+    is_private: true
   }
 
   $stateProvider.state 'surveys.details.search-results.list', {
     url: '/list'
     templateUrl: 'common/templates/surveys.details.search-results.html'
     controller: 'SearchResultsController'
+    is_private: true
   }
 
   $stateProvider.state 'surveys.details.search-results.details', {
     url: '/details'
     templateUrl: 'common/templates/surveys.details.search-results.details.html'
     controller: 'SearchResultController'
+    is_private: true
   }
 
   $stateProvider.state 'surveys.details.searches', {
@@ -60,18 +66,21 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
     url: '/searches'
     template: '<div ui-view></div>'
     controller: 'SearchesController'
+    is_private: true
   }
 
   $stateProvider.state 'surveys.details.searches.list', {
     url: '/list'
     templateUrl: 'common/templates/surveys.details.searches.list.html'
     controller: 'SearchesController'
+    is_private: true
   }
 
   $stateProvider.state 'surveys.details.searches.create', {
     url: '/create'
     templateUrl: 'common/templates/surveys.details.searches.create.html'
     controller: 'CreateSearchController'
+    is_private: true
   }
 
   $stateProvider.state 'sign-in', {
