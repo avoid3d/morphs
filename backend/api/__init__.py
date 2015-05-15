@@ -6,3 +6,4 @@ api = Blueprint('api', __name__)
 import sessions
 import users
 import surveys
+import search_data

@@ -9,7 +9,7 @@
                 <th>Name</th>
                 <th>Comments</th>
             </tr>
-            <tr ng-repeat="survey in ctrl.surveys" ui-sref="surveys.details.search-results({survey_id: survey.id_})">
+            <tr ng-repeat="survey in ctrl.surveys" ui-sref="surveys.details.search-results.list({survey_id: survey.id_})">
                 <td>{{survey.name}}</td>
                 <td>{{survey.comments}}</td>
             </tr>

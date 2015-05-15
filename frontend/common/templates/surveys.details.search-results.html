@@ -5,10 +5,10 @@
 <table class="table table-hover table-bordered">
     <tr>
         <th>ID</th>
-        <th>Comments</th>
+        <th>Visible Link</th>
     </tr>
-    <tr ng-repeat="search_result in ctrl.search_results" ui-sref="surveys.details.search-results({survey_id: survey.id_})">
-        <td>{{survey.name}}</td>
-        <td>{{survey.comments}}</td>
+    <tr ng-repeat="search_result in ctrl.search_results" ui-sref="surveys.details.search-results.details({search_result_id: search_result.id_})">
+        <td>{{search_result.id_}}</td>
+        <td>{{search_result.visible_link}}</td>
     </tr>
 </table>
