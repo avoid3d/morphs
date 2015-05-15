@@ -14,12 +14,14 @@ module.exports = function(grunt) {
                     'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
                 ],
                 dest: 'build/bower-dependencies.min.js',
+		nonull: true,
             },
             css: {
                 src: [
                     'bower_components/bootstrap/dist/css/bootstrap.css',
                 ],
                 dest: 'build/bower-dependencies.css',
+		nonull: true,
             }
         },
         coffee: {
