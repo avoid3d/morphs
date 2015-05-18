@@ -1,7 +1,7 @@
 morphs = window.angular.module 'morphs'
 
 
-morphs.controller 'SearchesController', class SearchController
+morphs.controller 'ListSearchesController', class ListSearchController
   constructor: ($scope, $stateParams, @$window, SearchesService) ->
     $scope.ctrl = @
     @searches = []

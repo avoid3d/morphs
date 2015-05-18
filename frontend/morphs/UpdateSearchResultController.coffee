@@ -1,13 +1,13 @@
 morphs = window.angular.module 'morphs'
 
 
-morphs.controller 'SearchResultController', class SearchResultController
-  constructor: ($scope, @$stateParams, @$state, @SurveyService, @SearchResultsService) ->
+morphs.controller 'UpdateSearchResultController', class SearchResultController
+  constructor: ($scope, @$stateParams, @$state, @SurveysService, @SearchResultsService) ->
     $scope.ctrl = @
     @survey = {}
     @search_result = {}
 
-    @SurveyService.get_survey(@$stateParams.survey_id)
+    @SurveysService.get_survey(@$stateParams.survey_id)
       .then (survey) =>
         window.angular.copy survey, @survey
 

@@ -4,6 +4,9 @@ morphs.service 'SurveysService', class SurveysService
   constructor: (@Restangular, @UserService) ->
     @surveys = []
 
+  get_survey: (survey_id) =>
+    return @Restangular.one('surveys', survey_id).get()
+
   refresh: =>
     @Restangular
       .one 'users', @UserService.user.id_

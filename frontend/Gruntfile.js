@@ -28,10 +28,12 @@ module.exports = function(grunt) {
             compile: {
                 files: {
                     'build/morphs.js': [
-                        'common/common.coffee',
-                        'common/**.coffee',
+                        'morphs/morphs.coffee',
+                        'morphs/**.coffee',
                         'nav/nav.coffee',
                         'nav/**.coffee',
+                        'users/users.coffee',
+                        'users/**.coffee',
                     ]
                 }
             }

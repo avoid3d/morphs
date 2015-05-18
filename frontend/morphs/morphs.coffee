@@ -3,6 +3,7 @@ morphs = window.angular.module 'morphs', [
   'ui.bootstrap',
   'ipCookie',
   'restangular',
+  'users',
   'nav',
 ]
 
@@ -21,14 +22,14 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
 
   $stateProvider.state 'surveys.list', {
     url: '/list'
-    templateUrl: 'common/templates/list-surveys.html'
-    controller: 'SurveysController'
+    templateUrl: 'morphs/templates/surveys.list.html'
+    controller: 'ListSurveysController'
     is_private: true
   }
 
   $stateProvider.state 'surveys.create', {
     url: '/create'
-    templateUrl: 'common/templates/create-survey.html'
+    templateUrl: 'morphs/templates/surveys.create.html'
     controller: 'CreateSurveyController'
     is_private: true
   }
@@ -36,8 +37,8 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state 'surveys.details', {
     abstract: true
     url: '/:survey_id'
-    templateUrl: 'common/templates/survey-details.html'
-    controller: 'SurveyDetailsController'
+    templateUrl: 'morphs/templates/surveys.details.html'
+    controller: 'UpdateSurveyController'
     is_private: true
   }
 
@@ -50,15 +51,15 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
 
   $stateProvider.state 'surveys.details.search-results.list', {
     url: '/list'
-    templateUrl: 'common/templates/surveys.details.search-results.html'
-    controller: 'SearchResultsController'
+    templateUrl: 'morphs/templates/surveys.details.search-results.list.html'
+    controller: 'ListSearchResultsController'
     is_private: true
   }
 
   $stateProvider.state 'surveys.details.search-results.details', {
     url: '/:search_result_id'
-    templateUrl: 'common/templates/surveys.details.search-results.details.html'
-    controller: 'SearchResultController'
+    templateUrl: 'morphs/templates/surveys.details.search-results.details.html'
+    controller: 'UpdateSearchResultController'
     is_private: true
   }
 
@@ -66,36 +67,21 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
     abstract: true
     url: '/searches'
     template: '<div ui-view></div>'
-    controller: 'SearchesController'
     is_private: true
   }
 
   $stateProvider.state 'surveys.details.searches.list', {
     url: '/list'
-    templateUrl: 'common/templates/surveys.details.searches.list.html'
-    controller: 'SearchesController'
+    templateUrl: 'morphs/templates/surveys.details.searches.list.html'
+    controller: 'ListSearchesController'
     is_private: true
   }
 
   $stateProvider.state 'surveys.details.searches.create', {
     url: '/create'
-    templateUrl: 'common/templates/surveys.details.searches.create.html'
+    templateUrl: 'morphs/templates/surveys.details.searches.create.html'
     controller: 'CreateSearchController'
     is_private: true
-  }
-
-  $stateProvider.state 'sign-in', {
-    url: '/sign-in'
-    templateUrl: 'common/templates/sign-in.html'
-    controller: 'SignInController'
-    is_private: false
-  }
-
-  $stateProvider.state 'sign-up', {
-    url: '/sign-up'
-    templateUrl: 'common/templates/sign-up.html'
-    controller: 'SignUpController'
-    is_private: false
   }
 
 morphs.run ($rootScope, $state, $stateParams) ->
