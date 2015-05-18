@@ -14,6 +14,7 @@ class SearchResult(db.Model, Entity):
     'image_id': fields.Integer,
     'visible_link': fields.String,
     'direct_link': fields.String,
+    'completion_state': fields.String,
   }
 
   user_id = Column(Integer, ForeignKey('users.id_'))
@@ -34,5 +35,14 @@ class SearchResult(db.Model, Entity):
   image_scraped_state = Column(String, default='NEW')
   image_id = Column(Integer, ForeignKey('images.id_'))
   image = relationship('Image')
+
+  class CompletionStates:
+    NOT_USABLE = 'NOT_USABLE'
+    REVISIT = 'REVISIT'
+    DONE = 'DONE'
+
+  completion_state = Column(String, default=CompletionStates.REVISIT)
+
+  tags = relationship('Tag')
 
   result_fields = relationship('ResultField')

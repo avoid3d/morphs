@@ -15,6 +15,7 @@ morphs.service 'SurveysService', class SurveysService
         console.log error
 
   create_survey: (survey_data) =>
+    console.log 'createe', survey_data
     promise = @Restangular
       .one 'users', @UserService.user.id_
       .all 'surveys'

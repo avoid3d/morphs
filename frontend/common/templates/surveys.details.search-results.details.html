@@ -1,9 +1,36 @@
 <div class="row" style="padding-top: 10px">
-    <div class="col-md-6">
-        Some details
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Search Result ({{ctrl.search_result.id_}})</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Visible Link</td>
+                        <td>
+                            <a href="{{ctrl.search_result.visible_link}}">{{ctrl.search_result.visible_link}}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Direct Link</td>
+                        <td>
+                            <a href="{{ctrl.search_result.direct_link}}">{{ctrl.search_result.direct_link}}</a>
+                        </td>
+                    </tr>
+                </table>
+                <img src="{{ctrl.search_result.direct_link}}" class="img-responsive"></img>
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-6">
-        <div ms-survey survey="ctrl.survey" ctrl="ctrl"></div>
+    <div class="col-md-8">
+        <div class="well">
+            <button ng-click="ctrl.previous()" class="btn btn-default">Previous</button>
+            <button ng-click="ctrl.next()" class="btn btn-default pull-right">Next</button>
+            <button ng-click="ctrl.done_and_next()" class="btn btn-default pull-right">Done and next</button>
+            <button ng-click="ctrl.revisit_and_next()" class="btn btn-default pull-right">Revisit and next</button>
+            <button ng-click="ctrl.not_usable_and_next()" class="btn btn-default pull-right">Not usable and next</button>
+        </div>
+        <div ms-survey survey="ctrl.survey" search-result="ctrl.search_result" ctrl="ctrl"></div>
     </div>
 </div>

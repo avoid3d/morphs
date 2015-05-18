@@ -26,7 +26,7 @@ morphs.controller 'CreateSurveyController', class CreateSurveyController
     @add_field_form = {
       label: null
       field_type: @field_types[0]
-      options: []
+      options: null
     }
 
     $scope.$watch ($scope) =>
@@ -42,16 +42,28 @@ morphs.controller 'CreateSurveyController', class CreateSurveyController
     return @add_field_form.field_type.id in ['select', 'radio']
 
   add_field: =>
-    @survey.fields.push {
+    field = {
       label: @add_field_form.label
       field_type: @add_field_form.field_type.id
-      options: (option.replace /^\s+|\s+$/g, '' for option in @add_field_form.options.split ',')
     }
+
+    if @add_field_form.options
+      field.options = (option.replace /^\s+|\s+$/g, '' for option in @add_field_form.options.split ',')
+    @survey.fields.push field
+
+    @add_field_form.label = null
+    @add_field_form.field_type = @field_types[0]
+    @add_field_form.options = null
 
   delete_field: (field) =>
     @survey.fields.splice(@survey.fields.indexOf(field), 1);
 
   create_survey: =>
-    @SurveysService.create_survey @create_survey_form
+    survey = {
+      name: @create_survey_form.name
+      comments: @create_survey_form.comments
+      fields: @survey.fields
+    }
+    @SurveysService.create_survey survey
       .then (survey) =>
         @$state.go 'surveys.details.search-results.list', {survey_id: survey.id_}

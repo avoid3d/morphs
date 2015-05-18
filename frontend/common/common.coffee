@@ -56,7 +56,7 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
   }
 
   $stateProvider.state 'surveys.details.search-results.details', {
-    url: '/details'
+    url: '/:search_result_id'
     templateUrl: 'common/templates/surveys.details.search-results.details.html'
     controller: 'SearchResultController'
     is_private: true

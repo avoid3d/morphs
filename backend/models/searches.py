@@ -18,6 +18,7 @@ class Search(db.Model, Entity):
   are_results_uploaded = Column(Boolean, default=False) 
 
   survey_id = Column(Integer, ForeignKey('surveys.id_'))
+  survey = relationship('Survey')
 
   results = relationship('SearchResult')
 

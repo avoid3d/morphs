@@ -7,3 +7,4 @@ import sessions
 import users
 import surveys
 import search_data
+import search_results

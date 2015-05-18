@@ -3,16 +3,8 @@ from flask.ext.restful import fields, marshal_with, reqparse
 from backend import db
 from backend.api import api
 from backend.models import User, Session
+from utils import my_jsonify
 
-
-def my_jsonify(f):
-  import json
-  from functools import wraps
-  @wraps(f)
-  def wrapped(*args, **kwargs):
-    raw = f(*args, **kwargs)
-    return json.dumps(raw)
-  return wrapped
 
 @api.route('/sessions', methods=["POST"])
 @my_jsonify

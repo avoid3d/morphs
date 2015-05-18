@@ -1,17 +1,12 @@
+import json
 from functools import wraps
 from flask import jsonify
 from flask.ext.restful import marshal_with, fields, reqparse
 from backend import db
 from backend.api import api
-from backend.models import Survey, User, Session
+from backend.models import Survey, User, Session, SurveyField
+from utils import my_jsonify
 
-def my_jsonify(f):
-  import json
-  @wraps(f)
-  def wrapped(*args, **kwargs):
-    raw = f(*args, **kwargs)
-    return json.dumps(raw)
-  return wrapped
 
 @api.route('/users', methods=["POST"])
 @my_jsonify
@@ -45,14 +40,24 @@ def get_users_surveys(user_id):
 @marshal_with(Survey.marshaller)
 def user_create_survey(user_id):
   parser = reqparse.RequestParser()
-  parser.add_argument('name', str)
-  parser.add_argument('comments', str)
+  parser.add_argument('name', type=str)
+  parser.add_argument('comments', type=str)
+  parser.add_argument('fields', location='json', type=list)
   args = parser.parse_args()
   survey = Survey(
     user_id=user_id,
     name=args.name,
     comments=args.comments,
   )
+
+  for survey_field_arg in args.fields:
+    survey_field = SurveyField(
+      survey=survey,
+      label=survey_field_arg['label'],
+      field_type=survey_field_arg['field_type'],
+      options=json.dumps(survey_field_arg['options']),
+    )
+    db.session.add(survey_field)
   db.session.add(survey)
   db.session.commit()
   return survey

@@ -6,5 +6,6 @@ morphs.directive 'msSurvey', ->
   templateUrl: 'common/templates/survey.html'
   scope: {
     survey: '='
+    searchResult: '='
     ctrl: '='
   }
