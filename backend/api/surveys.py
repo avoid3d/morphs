@@ -17,7 +17,9 @@ def get_survey(survey_id):
   survey = Survey.query.filter(Survey.id_==survey_id).first()
   deserialized_fields = []
   for field in survey.fields:
-    field.options = json.loads(field.options)
+    # Decode field.options if necessary.
+    if field.options:
+      field.options = json.loads(field.options)
     deserialized_fields.append(field)
 
   survey.fields = deserialized_fields

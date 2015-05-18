@@ -55,8 +55,9 @@ def user_create_survey(user_id):
       survey=survey,
       label=survey_field_arg['label'],
       field_type=survey_field_arg['field_type'],
-      options=json.dumps(survey_field_arg['options']),
     )
+    if 'options' in survey_field_arg:
+      survey_field.options=json.dumps(survey_field_arg['options'])
     db.session.add(survey_field)
   db.session.add(survey)
   db.session.commit()
