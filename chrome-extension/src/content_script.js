@@ -1,10 +1,20 @@
-console.log('injected')
+var endpoint = 'http://morphs.io:5000/upload-google-results'
+//var endpoint = 'http://localhost:5000/upload-google-results'
+var morphic_id = /morphic_id:(\d+)/.exec(window.location.href)[1];
+
+function jumpToPageBottom() {
+    $('html, body').scrollTop($(document).height() - $(window).height());
+}
+
+$('html').bind("DOMSubtreeModified", function() {
+    jumpToPageBottom();
+});
 
 window.setTimeout(function() {
-    $.post('http://localhost:5000/upload-google-results', {
+    $.post(endpoint, {
         html: document.getElementsByTagName('html')[0].innerHTML,
-        search_query: 'hello world',
+        morphic_id: morphic_id,
     }, function(data) {
         console.log(data);
     })
-}, 0);
+}, 5);

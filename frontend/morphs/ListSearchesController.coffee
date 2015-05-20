@@ -11,6 +11,7 @@ morphs.controller 'ListSearchesController', class ListSearchController
 
   run_search: (search) =>
     query_string = encodeURIComponent(search.search_query)
-    url = 'https://www.google.com/images?q=' + query_string
+    morphic_id = search.id_
+    url = "https://www.google.com/search?q=#{query_string}&fg=1&tbm=isch&tbs=itp:photo,morphic_id:#{morphic_id}"
     @$window.open url
 

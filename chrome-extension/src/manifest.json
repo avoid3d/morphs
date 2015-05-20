@@ -1,9 +1,9 @@
 {
     "name": "Morphs.io chrome extension",
     "manifest_version": 2,
-    "version": "0.0.1",
+    "version": "0.0.2",
     "content_scripts": [{
-        "matches": ["https://www.google.com/search*"],
+        "matches": ["https://www.google.com/search*morphic_id:*"],
         "js": ["jquery.js", "content_script.js"]
     }]
 }

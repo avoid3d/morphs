@@ -9,11 +9,11 @@ from google_images_serp_parser import GoogleImagesSERPParser
 @api.route('/upload-google-results', methods=['POST'])
 def upload_search_data():
   parser = reqparse.RequestParser()
-  parser.add_argument('search_query')
+  parser.add_argument('morphic_id', type=int)
   parser.add_argument('html')
   args = parser.parse_args()
 
-  search = Search.query.filter(Search.search_query==args.search_query).first()
+  search = Search.query.filter(Search.id_==args.morphic_id).first()
 
   if search is None:
     abort(404)
