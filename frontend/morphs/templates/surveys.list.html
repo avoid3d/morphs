@@ -2,14 +2,17 @@
     <div class="panel panel-default">
         <div class="panel-heading">Surveys</div>
         <div class="panel-body">
-            <button ng-click="$state.go('surveys.create')" class="btn btn-primary">Create new survey</button>
+            <button ng-click="$state.go('surveys.create')" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true" style="padding-right:4px"></span>
+            Create new survey
+            </button>
         </div>
         <table class="table table-hover">
             <tr>
                 <th>Name</th>
                 <th>Comments</th>
             </tr>
-            <tr ng-repeat="survey in ctrl.surveys" ui-sref="surveys.details.search-results.list({survey_id: survey.id_})">
+            <tr ng-repeat="survey in ctrl.surveys" ui-sref="surveys.details.search-results.list({survey_id: survey.id_})" style="cursor: pointer">
                 <td>{{survey.name}}</td>
                 <td>{{survey.comments}}</td>
             </tr>

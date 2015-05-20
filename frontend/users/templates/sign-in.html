@@ -1,17 +1,18 @@
 <div class="container">
-    <h1>Please sign in</h1>
-    <form>
-        <div class="form-group">
-            <label for="emailInput">Email address</label>
-            <input ng-model="ctrl.sign_in_form.email_address" type="email" class="form-control" id="emailInput" placeholder="Enter Email">
-        </div>
-
-        <div class="form-group">
-            <label for="passwordInput">Password</label>
-            <input ng-model="ctrl.sign_in_form.password" type="password" class="form-control" id="passwordInput" placeholder="Password">
-        </div>
-
-        <button type="submit" class="btn btn-default pull-right" ng-click="ctrl.sign_in()">Sign in</button>
-        <a ui-sref="sign-up">Don't have an account?</a>
-    </form>
+    <div class="col-md-6 col-md-offset-3">
+        <h1>Please sign in</h1>
+        <form>
+            <div class="form-group">
+                <label for="emailInput">Email address</label>
+                <input ng-model="ctrl.sign_in_form.email_address" type="email" class="form-control" id="emailInput" placeholder="Enter your email address">
+            </div>
+            <div class="form-group">
+                <label for="passwordInput">Password</label>
+                <a class="pull-right" ui-sref="forgot-password">Forgot your password?</a>
+                <input ng-model="ctrl.sign_in_form.password" type="password" class="form-control" id="passwordInput" placeholder="Enter your password">
+            </div>
+            <button type="submit" class="btn btn-primary pull-right" ng-click="ctrl.sign_in()">Sign in</button>
+            <a ui-sref="sign-up">Don't have an account?</a>
+        </form>
+    </div>
 </div>

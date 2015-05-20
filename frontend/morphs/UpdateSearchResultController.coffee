@@ -2,7 +2,16 @@ morphs = window.angular.module 'morphs'
 
 
 morphs.controller 'UpdateSearchResultController', class SearchResultController
-  constructor: ($scope, @$stateParams, @$state, @SurveysService, @SearchResultsService) ->
+  constructor: ($rootScope, $scope, @$stateParams, @$state, @SurveysService, @SearchResultsService) ->
+    $rootScope.extra_survey_nav_item = {
+      label: "Search Result (#{@$stateParams.search_result_id})"
+      state: 'surveys.details.search-results.details'
+    }
+
+    $scope.$on '$destroy', ->
+      $rootScope.extra_survey_nav_item = {}
+
+
     $scope.ctrl = @
     @survey = {}
     @search_result = {}
@@ -21,6 +30,24 @@ morphs.controller 'UpdateSearchResultController', class SearchResultController
       field_values: @search_result.field_values
     }
     return @SearchResultsService.update_search_result @$stateParams.search_result_id, search_result
+
+  get_label: ->
+    classes = {
+      'DONE': 'label-success'
+      'REVISIT': 'label-warning'
+      'NOT_USABLE': 'label-danger'
+    }
+
+    labels = {
+      'DONE': 'Done'
+      'REVISIT': 'Revisit'
+      'NOT_USABLE': 'Not usable'
+    }
+
+    return {
+      'class': classes[@search_result.completion_state]
+      'label': labels[@search_result.completion_state]
+    }
 
   next: =>
     @$state.go 'surveys.details.search-results.details', {search_result_id: parseInt(@$stateParams.search_result_id) + 1}

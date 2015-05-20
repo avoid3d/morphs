@@ -2,16 +2,31 @@ morphs = window.angular.module 'morphs', [
   'ui.router',
   'ui.bootstrap',
   'ipCookie',
+  'uiGmapgoogle-maps',
   'restangular',
   'users',
   'nav',
 ]
+
+morphs.config (uiGmapGoogleMapApiProvider) ->
+  uiGmapGoogleMapApiProvider.configure {
+    #key: 'your api key',
+    v: '3.17',
+    libraries: 'places,geometry'
+  }
+
 
 morphs.config (RestangularProvider, API_ENDPOINT) ->
   RestangularProvider.setBaseUrl API_ENDPOINT
 
 morphs.config ($stateProvider, $urlRouterProvider) ->
   $urlRouterProvider.otherwise '/surveys/list'
+
+  $stateProvider.state 'instructions', {
+    url: '/instructions'
+    templateUrl: 'morphs/templates/instructions.html'
+    is_private: true
+  }
 
   $stateProvider.state 'surveys', {
     url: '/surveys'

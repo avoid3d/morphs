@@ -8,5 +8,3 @@ morphs.controller 'UpdateSurveyController', class UpdateSurveyController
     @SurveysService.get_survey($stateParams.survey_id)
       .then (survey) =>
         window.angular.copy survey, @survey
-
-

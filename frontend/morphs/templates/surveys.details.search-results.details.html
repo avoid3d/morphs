@@ -22,14 +22,17 @@
             </div>
         </div>
     </div>
-
     <div class="col-md-8">
-        <div class="well">
+        <div class="well nav-well">
             <button ng-click="ctrl.previous()" class="btn btn-default">Previous</button>
+
             <button ng-click="ctrl.next()" class="btn btn-default pull-right">Next</button>
-            <button ng-click="ctrl.done_and_next()" class="btn btn-default pull-right">Done and next</button>
-            <button ng-click="ctrl.revisit_and_next()" class="btn btn-default pull-right">Revisit and next</button>
-            <button ng-click="ctrl.not_usable_and_next()" class="btn btn-default pull-right">Not usable and next</button>
+
+            <div class="btn-group pull-right" role="group" style="padding-right: 10px">
+                <button ng-click="ctrl.not_usable_and_next()" class="btn btn-danger">Not usable and next</button>
+                <button ng-click="ctrl.revisit_and_next()" class="btn btn-warning">Revisit and next</button>
+                <button ng-click="ctrl.done_and_next()" class="btn btn-success">Done and next</button>
+            </div>
         </div>
         <div ms-survey survey="ctrl.survey" search-result="ctrl.search_result" ctrl="ctrl"></div>
     </div>

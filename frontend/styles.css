@@ -1,0 +1,27 @@
+/*.navbar .container-fluid {
+  height: 65px;
+}
+*/
+.navbar-header .navbar-brand {
+  color: white;
+/*  font-size: 30px; */
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+/*  font-size: 20px;*/
+  padding-top: 18px;
+}
+
+.navbar-default .container-fluid {
+  background-color: #438eb9;
+}
+
+.angular-google-map-container {
+  height: 400px;
+}
+
+.nav-well {
+  padding: 9px;
+  margin-bottom: 10px
+}

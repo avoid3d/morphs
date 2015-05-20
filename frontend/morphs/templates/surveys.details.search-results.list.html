@@ -9,7 +9,7 @@
         <th>ID</th>
         <th>Visible Link</th>
     </tr>
-    <tr ng-repeat="search_result in ctrl.search_results" ui-sref="surveys.details.search-results.details({survey_id: $stateParams.survey_id, search_result_id: search_result.id_})">
+    <tr ng-repeat="search_result in ctrl.search_results" ui-sref="surveys.details.search-results.details({survey_id: $stateParams.survey_id, search_result_id: search_result.id_})" style="cursor: pointer">
         <td>{{search_result.id_}}</td>
         <td>{{search_result.visible_link}}</td>
     </tr>

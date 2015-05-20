@@ -18,6 +18,7 @@
     "bootstrap": "~3.3.4",
     "lodash": "~3.8.0",
     "restangular": "~1.5.1",
-    "angular-bootstrap": "~0.13.0"
+    "angular-bootstrap": "~0.13.0",
+    "angular-google-maps": "~2.1.1"
   }
 }
