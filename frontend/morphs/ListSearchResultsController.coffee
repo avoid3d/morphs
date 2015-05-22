@@ -5,8 +5,10 @@ morphs.controller 'ListSearchResultsController', class ListSearchResultsControll
   constructor: ($scope, @$stateParams, @SearchResultsService) ->
     @tags = []
     @search_results = []
-    $scope.ctrl = @
     @filter = []
+    @current_page = 0
+    @per_page = 60
+    $scope.ctrl = @
 
     @SearchResultsService.get_tags(@$stateParams.survey_id)
       .then (tags) =>
@@ -14,10 +16,14 @@ morphs.controller 'ListSearchResultsController', class ListSearchResultsControll
 
     @get_search_results()
 
-  get_search_results: (filter) =>
-    @SearchResultsService.get_search_results(@$stateParams.survey_id, filter)
+  get_search_results: (filter, page) =>
+    @SearchResultsService.get_search_results(@$stateParams.survey_id, filter, page)
       .then (search_results) =>
         window.angular.copy search_results, @search_results
+        @total_search_results = search_results.meta.count
 
   filter_search_results: =>
     @get_search_results @filter
+
+  page_changed: =>
+    @get_search_results @filter, @current_page

@@ -6,7 +6,7 @@
             </span>
         </h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body survey-panel" ng-class="{saving: saving}">
         <p>{{survey.comments}}</p>
         <form>
             <div class="row">
@@ -24,7 +24,7 @@
                         </label>
                     </div>
                     <!-- Location -->
-                    <div ng-if="field.field_type=='location'" ng-controller="MapController">
+                    <div ng-if="field.field_type=='location'" ng-controller="MapController" ng-init="init(searchResult, field.label)">
                         <ui-gmap-google-map center='ctrl.map.center' zoom='ctrl.map.zoom' draggable="true" style="height: 400px">
                             <ui-gmap-marker coords="ctrl.marker.coords" options="ctrl.marker.options" events="ctrl.marker.events" idkey="ctrl.marker.id">
                             </ui-gmap-marker>

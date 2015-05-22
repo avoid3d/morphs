@@ -4,7 +4,7 @@ from backend.models import Image as ImageModel
 
 
 logger = logging.getLogger()
-logger.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
 def done_scraping_image(search_result, success):
   if success:
@@ -49,10 +49,10 @@ def do_unscraped_image(unscraped_search_result):
 
 def do_work():
   while True:
-    unscraped_search_result = SearchResult
+    unscraped_search_result = (SearchResult
       .query
       .filter(SearchResult.is_image_scraped==False)
-      .first()
+      .first())
 
     if unscraped_search_result is None:
       sleep(5)

@@ -25,3 +25,7 @@
   padding: 9px;
   margin-bottom: 10px
 }
+
+.survey-panel.saving {
+  color: red;
+}

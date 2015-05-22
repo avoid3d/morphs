@@ -19,6 +19,21 @@ morphs.config (uiGmapGoogleMapApiProvider) ->
 morphs.config (RestangularProvider, API_ENDPOINT) ->
   RestangularProvider.setBaseUrl API_ENDPOINT
 
+  RestangularProvider.setResponseExtractor (response, operation) ->
+    # This is a get for a list
+    if operation == 'getList'
+      # Return an Array with one special property with all of the metadata
+      newResponse = response.results;
+      newResponse.meta = {
+        count: response.count,
+        limit: response.limit,
+        offset: response.offset
+      };
+      return newResponse;
+    else
+      # An element
+      return response;
+
 morphs.config ($stateProvider, $urlRouterProvider) ->
   $urlRouterProvider.otherwise '/surveys/list'
 

@@ -8,4 +8,5 @@ morphs.directive 'msSurvey', ->
     survey: '='
     searchResult: '='
     ctrl: '='
+    saving: '='
   }

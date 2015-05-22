@@ -15,6 +15,7 @@ morphs.controller 'UpdateSearchResultController', class SearchResultController
     $scope.ctrl = @
     @survey = {}
     @search_result = {}
+    @saving = false 
 
     @SurveysService.get_survey(@$stateParams.survey_id)
       .then (survey) =>
@@ -29,7 +30,10 @@ morphs.controller 'UpdateSearchResultController', class SearchResultController
       completion_state: completion_state
       field_values: @search_result.field_values
     }
-    return @SearchResultsService.update_search_result @$stateParams.search_result_id, search_result
+    @saving = true
+    promise = @SearchResultsService.update_search_result @$stateParams.search_result_id, search_result
+    promise.finally => @saving = false
+
 
   get_label: ->
     classes = {
@@ -48,6 +52,14 @@ morphs.controller 'UpdateSearchResultController', class SearchResultController
       'class': classes[@search_result.completion_state]
       'label': labels[@search_result.completion_state]
     }
+
+  should_show_next: =>
+    #TODO: Show based on search_results for this search.
+    true
+
+  should_show_previous: =>
+    #TODO: Show based on search_results for this search.
+    return @$stateParams.search_result_id > 0
 
   next: =>
     @$state.go 'surveys.details.search-results.details', {search_result_id: parseInt(@$stateParams.search_result_id) + 1}

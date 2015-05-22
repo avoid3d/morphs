@@ -25,25 +25,47 @@ def get_survey(survey_id):
   survey.fields = deserialized_fields
   return survey
 
+def paginate_marshaller(m):
+  return {
+    'count': fields.Integer,
+    'limit': fields.Integer,
+    'offset': fields.Integer,
+    'results': fields.Nested(m),
+  }
+
 @api.route('/surveys/<int:survey_id>/search_results')
 @my_jsonify
-@marshal_with(SearchResult.marshaller)
+@marshal_with(paginate_marshaller(SearchResult.marshaller))
 def get_surveys_search_results(survey_id):
   parser = reqparse.RequestParser()
   parser.add_argument('filter', type=str, default=None)
+  parser.add_argument('per_page', type=int, default=60)
+  parser.add_argument('page', type=int, default=1)
   args = parser.parse_args()
 
-  query = (SearchResult.query
+  offset = args.per_page*args.page - args.per_page
+
+  search_results_query = (SearchResult.query
     .join(Search)
     .filter(Search.survey_id==survey_id)
   )
 
-  args.filter = 'test field: green'
-
   if args.filter:
-    query.join(Tag).filter(Tag.value==args.filter)
+    search_results_query = (search_results_query
+      .join(Tag)
+      .filter(Tag.value==args.filter)
+    )
 
-  return query.all()
+  return {
+    'count': search_results_query.count(),
+    'results': (search_results_query
+      .limit(args.per_page)
+      .offset(offset)
+      .all()
+    ),
+    'offset': offset,
+    'limit': args.per_page,
+  }
 
 @api.route('/surveys/<int:survey_id>/searches')
 @my_jsonify
@@ -56,13 +78,15 @@ def get_surveys_searches(survey_id):
 
 @api.route('/surveys/<int:survey_id>/tags')
 @my_jsonify
-@marshal_with(Tag.marshaller)
+@marshal_with(paginate_marshaller(Tag.marshaller))
 def get_surveys_tags(survey_id):
   survey = Survey.query.filter(Survey.id_==survey_id).first()
 
   tags = Tag.query.join(SearchResult).join(Search).filter(Search.survey==survey).all()
 
-  return tags
+  seen = {tag.value for tag in tags}
+
+  return {'results': [Tag(value=value) for value in seen]}
 
 @api.route('/surveys/<int:survey_id>/searches', methods=['POST'])
 @my_jsonify

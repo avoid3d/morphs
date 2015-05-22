@@ -36,8 +36,6 @@ def update_search_result(search_result_id):
   search_result.completion_state = args.completion_state
   survey = search_result.search.survey
 
-  tags = []
-
   for field_label, field_value in args.field_values.iteritems():
     survey_field = (SurveyField.query
       .filter(SurveyField.label==field_label)
@@ -57,14 +55,9 @@ def update_search_result(search_result_id):
       )
     result_field.value = field_value
 
-    tags.append(Tag(
-      search_result=search_result,
-      value='%s: %s' % (field_label, field_value)
-    ))
-
     db.session.add(result_field)
 
-  search_result.tags = tags
+  search_result.update_tags()
 
   db.session.add(search_result)
   db.session.commit()

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from flask.ext.restful import fields
 from backend import db
-from backend.models import Entity
+from backend.models import Entity, Tag
 
 
 class SearchResult(db.Model, Entity):
@@ -46,3 +46,19 @@ class SearchResult(db.Model, Entity):
   tags = relationship('Tag')
 
   result_fields = relationship('ResultField')
+
+  def update_tags(self):
+    new_tags = []
+
+    new_tags.append(Tag(
+      search_result=self,
+      value='%s: %s' % ('completion_state', self.completion_state)
+    ))
+
+    for result_field in self.result_fields:
+      new_tags.append(Tag(
+        search_result=self,
+        value='%s: %s' % (result_field.survey_field.label, result_field.value),
+      ))
+
+    self.tags = new_tags
