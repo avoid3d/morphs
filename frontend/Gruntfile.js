@@ -12,7 +12,8 @@ module.exports = function(grunt) {
                     'bower_components/restangular/dist/restangular.min.js',
                     'bower_components/angular-bootstrap/ui-bootstrap.min.js',
                     'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-                    'bower_components/angular-google-maps/dist/angular-google-maps.min.js'
+                    'bower_components/angular-google-maps/dist/angular-google-maps.min.js',
+                    'bower_components/angular-notify/dist/angular-notify.min.js',
                 ],
                 dest: 'build/bower-dependencies.min.js',
         		nonull: true,
@@ -20,6 +21,7 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     'bower_components/bootstrap/dist/css/bootstrap.css',
+                    'bower_components/angular-notify/dist/angular-notify.css',
                 ],
                 dest: 'build/bower-dependencies.css',
         		nonull: true,

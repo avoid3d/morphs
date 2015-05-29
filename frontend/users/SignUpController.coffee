@@ -2,7 +2,7 @@ morphs = window.angular.module 'morphs'
 
 
 morphs.controller 'SignUpController', class SignUpController
-  constructor: (@$scope, @$state, @UserService) ->
+  constructor: (@$scope, @$state, @UserService, @notify) ->
     @$scope.ctrl = @
     @sign_up_form = {email_address: null, password: null, is_loading: false}
 
@@ -13,6 +13,8 @@ morphs.controller 'SignUpController', class SignUpController
       .then (response) =>
         @$state.go 'surveys.list'
       , (error) =>
-        console.log 'something went wrong'
+        if error.status == 400
+          console.log error
+          @notify error.data.message
       .finally =>
         @sign_up_form.is_loading = false 
