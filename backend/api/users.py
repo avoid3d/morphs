@@ -5,7 +5,7 @@ from flask.ext.restful import marshal_with, fields, reqparse
 from backend import db
 from backend.api import api
 from backend.models import Survey, User, Session, SurveyField
-from utils import my_jsonify
+from utils import my_jsonify, paginate_marshaller
 
 
 @api.route('/users', methods=["POST"])
@@ -30,10 +30,12 @@ def sign_up():
 
 @api.route('/users/<int:user_id>/surveys')
 @my_jsonify
-@marshal_with(Survey.marshaller)
+@marshal_with(paginate_marshaller(Survey.marshaller))
 def get_users_surveys(user_id):
   users_surveys = Survey.query.filter(Survey.user_id==user_id).all()
-  return users_surveys
+  return {
+    'results': users_surveys
+  }
 
 @api.route('/users/<int:user_id>/surveys', methods=['POST'])
 @my_jsonify

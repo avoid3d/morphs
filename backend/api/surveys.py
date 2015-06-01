@@ -4,7 +4,7 @@ from sqlalchemy import func
 from backend import db
 from backend.api import api
 from backend.models import Survey, SearchResult, Search, SurveyField, Tag
-from utils import my_jsonify
+from utils import my_jsonify, paginate_marshaller
 
 
 m = {'fields': fields.Nested(SurveyField.marshaller)}
@@ -24,14 +24,6 @@ def get_survey(survey_id):
 
   survey.fields = deserialized_fields
   return survey
-
-def paginate_marshaller(m):
-  return {
-    'count': fields.Integer,
-    'limit': fields.Integer,
-    'offset': fields.Integer,
-    'results': fields.Nested(m),
-  }
 
 @api.route('/surveys/<int:survey_id>/search_results')
 @my_jsonify
@@ -69,12 +61,14 @@ def get_surveys_search_results(survey_id):
 
 @api.route('/surveys/<int:survey_id>/searches')
 @my_jsonify
-@marshal_with(Search.marshaller)
+@marshal_with(paginate_marshaller(Search.marshaller))
 def get_surveys_searches(survey_id):
   searches = (Search.query
     .filter(Search.survey_id==survey_id)
     .all())
-  return searches
+  return {
+    'results': searches
+  }
 
 @api.route('/surveys/<int:survey_id>/tags')
 @my_jsonify
