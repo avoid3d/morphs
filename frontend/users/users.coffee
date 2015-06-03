@@ -6,6 +6,9 @@ users.config ($stateProvider) ->
     templateUrl: 'users/templates/sign-in.html'
     controller: 'SignInController'
     is_private: false
+    onEnter: ($state, UserService)->
+      if UserService.is_signed_in()
+        $state.go 'surveys.list'
   }
 
   $stateProvider.state 'sign-up', {

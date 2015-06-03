@@ -4,9 +4,9 @@ morphs = window.angular.module 'morphs', [
   'ipCookie',
   'uiGmapgoogle-maps',
   'restangular',
+  'cgNotify',
   'users',
   'nav',
-  'cgNotify',
 ]
 
 HEADER_NAME = 'Morphs-Handle-Errors-Generically';
@@ -102,7 +102,7 @@ morphs.config (RestangularProvider, API_ENDPOINT) ->
       return response;
 
 morphs.config ($stateProvider, $urlRouterProvider) ->
-  $urlRouterProvider.otherwise '/surveys/list'
+  $urlRouterProvider.otherwise '/sign-in'
 
   $stateProvider.state 'instructions', {
     url: '/instructions'
