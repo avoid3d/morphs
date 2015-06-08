@@ -40,6 +40,7 @@ def get_surveys_search_results(survey_id):
   search_results_query = (SearchResult.query
     .join(Search)
     .filter(Search.survey_id==survey_id)
+    .order_by(SearchResult.id_)
   )
 
   if args.filter:
