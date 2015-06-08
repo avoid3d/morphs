@@ -24,9 +24,13 @@
                         </label>
                     </div>
                     <!-- Location -->
+                    <script type="text/ng-template" id="searchbox.tpl.html">
+                        <input id="pac-input" class="pac-controls" type="text" placeholder="Search">
+                    </script>
                     <div ng-if="field.field_type=='location'" ng-controller="MapController" ng-init="init(searchResult, field.label)">
                         <ui-gmap-google-map center='ctrl.map.center' zoom='ctrl.map.zoom' draggable="true" style="height: 400px">
                             <ui-gmap-marker coords="ctrl.marker.coords" options="ctrl.marker.options" events="ctrl.marker.events" idkey="ctrl.marker.id">
+                            <ui-gmap-search-box template="ctrl.searchbox.template" events="ctrl.searchbox.events" position="BOTTOM_RIGHT"></ui-gmap-search-box>
                             </ui-gmap-marker>
                         </ui-gmap-google-map>
                     </div>

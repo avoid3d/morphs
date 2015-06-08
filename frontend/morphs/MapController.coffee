@@ -15,6 +15,34 @@ morphs.controller 'MapController', class MapController
       id: 'map-marker'
     }
 
+    events = {
+        places_changed: (searchBox) =>
+            place = searchBox.getPlaces();
+            if !place || place == 'undefined' || place.length == 0
+                console.log 'No place data.'
+                return
+
+            @map.center = {
+              "latitude": place[0].geometry.location.lat(),
+              "longitude": place[0].geometry.location.lng()
+            }
+
+            @map.zoom = 18
+
+            @marker.coords = {
+                latitude: place[0].geometry.location.lat(),
+                longitude: place[0].geometry.location.lng()
+            };
+
+            console.log @searchResult
+            #@searchResult.field_values[label] = JSON.stringify @marker.coords
+    };
+
+    @searchbox = {
+        template: 'searchbox.tpl.html',
+        events: events
+    }
+
     @$scope.ctrl = @
 
     @$scope.init = @init
@@ -30,3 +58,5 @@ morphs.controller 'MapController', class MapController
         coords = JSON.parse searchResult.field_values[label]
         @marker.coords = coords
     , true
+
+    @searchResult = searchResult
