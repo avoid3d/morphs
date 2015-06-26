@@ -7,6 +7,11 @@ from backend import create_app, db
 app = create_app('dev')
 manager = Manager(app)
 
+def background_work():
+	app = create_app('prod')
+	from background_work import do_work
+	do_work()
+
 def _make_context():
     from backend.models import Survey, User, Session
     return dict(app=app, db=db, Survey=Survey, User=User, Session=Session)
