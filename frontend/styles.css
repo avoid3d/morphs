@@ -27,7 +27,7 @@
 }
 
 .survey-panel.saving {
-  color: red;
+  border: 2px solid #d58512;  
 }
 
 html, body {
@@ -89,3 +89,4 @@ html, body {
 .angular-google-map img {
     max-width: inherit;
 }
+

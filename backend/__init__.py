@@ -13,7 +13,7 @@ def add_cors(response):
 def create_app(environment='dev'):
   app = Flask(__name__)
 
-  app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+  app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://morphs:dontlook@localhost:5432/prod'
 
   db.init_app(app)
 

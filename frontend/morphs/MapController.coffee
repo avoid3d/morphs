@@ -51,6 +51,7 @@ morphs.controller 'MapController', class MapController
     @$scope.$watch 'ctrl.marker.coords', =>
       if Object.keys(searchResult).length != 0
         searchResult.field_values[label] = JSON.stringify @marker.coords
+        @map.center = window.angular.copy @marker.coords;
     , true
 
     @$scope.$watch 'searchResult.field_values', =>
@@ -60,3 +61,4 @@ morphs.controller 'MapController', class MapController
     , true
 
     @searchResult = searchResult
+
