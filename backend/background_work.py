@@ -1,3 +1,7 @@
+from io import BytesIO
+from PIL import Image
+import imagehash
+import requests
 import logging
 from backend.models import SearchResult
 from backend.models import Image as ImageModel
@@ -15,15 +19,16 @@ def done_scraping_image(search_result, success):
   db.session.add(search_result)
   db.session.commit()
 
-def do_unscraped_image(unscraped_search_result):
-  if not unscraped_search_result.link:
+def do_unscraped_search_result(unscraped_search_result):
+  logger.info('Processing search_result %s' % unscraped_search_result)
+  if not unscraped_search_result.direct_link:
     logger.warn("Search result %s missing link." % unscraped_search_result)
     done_scraping_image(unscraped_search_result, success=False)
     return
 
-  raw_image_response = requests.get(unscraped_search_result.link, timeout=10)
+  raw_image_response = requests.get(unscraped_search_result.direct_link, timeout=10)
   if raw_image_response.status_code != 200:
-    logger.warn("Search result %s image link %s returned non 200 response." % (unscraped_search_result, unscraped_search_result.link))
+    logger.warn("Search result %s image link %s returned non 200 response." % (unscraped_search_result, unscraped_search_result.direct_link))
     done_scraping_image(unscraped_search_result, success=False)
     return
 
@@ -51,9 +56,12 @@ def do_work():
   while True:
     unscraped_search_result = (SearchResult
       .query
-      .filter(SearchResult.is_image_scraped==False)
+      .filter(SearchResult.image_scraped_state=='NEW')
       .first())
+
+    do_unscraped_search_result(unscraped_search_result)
 
     if unscraped_search_result is None:
       sleep(5)
+      logger.info('Done processing.')
       continue
