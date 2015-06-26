@@ -7,6 +7,7 @@ from backend import create_app, db
 app = create_app('dev')
 manager = Manager(app)
 
+@manager.command
 def background_work():
 	app = create_app('prod')
 	from background_work import do_work
