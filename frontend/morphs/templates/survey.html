@@ -8,6 +8,8 @@
     </div>
     <div class="panel-body survey-panel" ng-class="{saving: saving}">
         <p>{{survey.comments}}</p>
+        <span ng-show="saving" class="pull-right label ng-binding label-warning">
+            <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Saving</span>
         <form>
             <div class="row">
                 <div ng-repeat="field in survey.fields" class="form-group" ng-class="{'col-md-12': field.field_type=='location', 'col-md-6': field.field_type!='location'}">
