@@ -1,10 +1,37 @@
 import json
+import csv
+from flask import send_file
 from flask.ext.restful import marshal_with, reqparse, fields
 from sqlalchemy import func
 from backend import db
 from backend.api import api
 from backend.models import Survey, SearchResult, Search, SurveyField, Tag
 from utils import my_jsonify, paginate_marshaller
+from io import BytesIO
+
+@api.route('/surveys/<int:survey_id>/export-results')
+def get_survey_results(survey_id):
+  #TODO: joinedload .fields, .search_results and
+  # search_result.result_fields and use a local cache
+  # of survey_fields to get survey_field.label by id.
+  survey = Survey.query.filter(Survey.id_==survey_id).first()
+
+  field_names = [field.label for field in survey.fields]
+
+  f = BytesIO()
+
+  writer = csv.DictWriter(f, field_names)
+  writer.writeheader()
+
+  for search_result in survey.search_results:
+    d = {}
+    for result_field in search_result.result_fields:
+      d[result_field.survey_field.label] = result_field.value
+    writer.writerow(d)
+
+  f.seek(0)
+
+  return send_file(f, mimetype='text/csv')
 
 
 m = {'fields': fields.Nested(SurveyField.marshaller)}

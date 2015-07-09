@@ -53,7 +53,6 @@ def do_unscraped_search_result(unscraped_search_result):
     image_file = BytesIO()
     image.save(image_file, 'JPEG')
 
-
     image.thumbnail((500, 500), Image.ANTIALIAS)
     thumbnail_file = BytesIO()
     image.save(thumbnail_file, 'JPEG')
