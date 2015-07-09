@@ -139,6 +139,13 @@ morphs.config ($stateProvider, $urlRouterProvider) ->
     is_private: true
   }
 
+  $stateProvider.state 'surveys.details.export-results', {
+    controller: 'ExportResultsController'
+    url: '/export-results'
+    templateUrl: 'morphs/templates/surveys.details.export-results.html'
+    is_private: true
+  }
+
   $stateProvider.state 'surveys.details.search-results', {
     abstract: true
     url: '/search-results'
