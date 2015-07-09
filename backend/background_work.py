@@ -3,8 +3,11 @@ from PIL import Image
 import imagehash
 import requests
 import logging
+import warnings
+from time import sleep
 from backend.models import SearchResult
 from backend.models import Image as ImageModel
+from backend import db
 
 
 logger = logging.getLogger()
@@ -26,7 +29,13 @@ def do_unscraped_search_result(unscraped_search_result):
     done_scraping_image(unscraped_search_result, success=False)
     return
 
-  raw_image_response = requests.get(unscraped_search_result.direct_link, timeout=10)
+  try:
+    raw_image_response = requests.get(unscraped_search_result.direct_link, timeout=10)
+  except requests.exceptions.RequestException:
+    logger.warn("Timout fetching image at url %s." % unscraped_search_result.direct_link)
+    done_scraping_image(unscraped_search_result, success=False)
+    return
+
   if raw_image_response.status_code != 200:
     logger.warn("Search result %s image link %s returned non 200 response." % (unscraped_search_result, unscraped_search_result.direct_link))
     done_scraping_image(unscraped_search_result, success=False)
@@ -34,21 +43,30 @@ def do_unscraped_search_result(unscraped_search_result):
 
   raw_image_file = BytesIO(raw_image_response.content)
 
-  image = Image.open(raw_image_file)
-  image_file = BytesIO()
-  image.save(image_file, 'JPEG')
+  warnings.simplefilter('error', Image.DecompressionBombWarning)
+  try:
+    image = Image.open(raw_image_file)
 
-  image_hash = imagehash.phash(image)
+    image_hash = imagehash.phash(image)
 
-  image.thumbnail((500, 500), Image.ANTIALIAS)
-  thumbnail_file = BytesIO()
-  image.save(thumbnail_file, 'JPEG')
+    image = image.convert('RGB')
+    image_file = BytesIO()
+    image.save(image_file, 'JPEG')
 
-  unscraped_search_result.image = ImageModel(
-    image_file=image_file.getvalue(),
-    thumbnail_file=thumbnail_file.getvalue(),
-    image_hash=str(image_hash),
-  )
+
+    image.thumbnail((500, 500), Image.ANTIALIAS)
+    thumbnail_file = BytesIO()
+    image.save(thumbnail_file, 'JPEG')
+
+    unscraped_search_result.image = ImageModel(
+      image_file=image_file.getvalue(),
+      thumbnail_file=thumbnail_file.getvalue(),
+      image_hash=str(image_hash),
+    )
+  except (IOError, Image.DecompressionBombWarning) as _:
+    logger.warn("Issue with PIL processing image.")
+    done_scraping_image(unscraped_search_result, success=False)
+    return
 
   done_scraping_image(unscraped_search_result, success=True)
 
@@ -59,9 +77,10 @@ def do_work():
       .filter(SearchResult.image_scraped_state=='NEW')
       .first())
 
-    do_unscraped_search_result(unscraped_search_result)
 
     if unscraped_search_result is None:
       sleep(5)
       logger.info('Done processing.')
       continue
+
+    do_unscraped_search_result(unscraped_search_result)
