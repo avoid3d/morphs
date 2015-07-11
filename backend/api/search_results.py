@@ -1,6 +1,6 @@
 from flask.ext.restful import marshal_with, fields, reqparse, marshal
 from backend import db
-from backend.models import SearchResult, ResultField, SurveyField, Tag
+from backend.models import SearchResult, ResultField, SurveyField, Tag, Search
 from backend.api import api
 from utils import my_jsonify
 
@@ -19,6 +19,7 @@ def get_search_result(search_result_id):
     field_values_marshaller[result_field.survey_field.label] = fields.String
 
   marshaller['field_values'] = fields.Nested(field_values_marshaller)
+  marshaller['search'] = fields.Nested(Search.marshaller)
 
   search_result.field_values = field_values
   return marshal(search_result, marshaller)
