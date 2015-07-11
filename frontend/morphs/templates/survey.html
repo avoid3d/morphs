@@ -7,7 +7,7 @@
         </h3>
     </div>
     <div class="panel-body survey-panel" ng-class="{saving: saving}">
-        <p>{{survey.comments}}</p>
+        <p ng-if="showComments">{{survey.comments}}</p>
         <span ng-show="saving" class="pull-right label ng-binding label-warning">
             <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Saving
 	</span>
