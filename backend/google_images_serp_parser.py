@@ -14,7 +14,7 @@ class GoogleImagesSERPParser(object):
 
   def parse_serp(self, html):
     elements = HTML(html)
-    container = CSSSelector('li#isr_mc')(elements)[0]
+    container = CSSSelector('div#isr_mc')(elements)[0]
     results = CSSSelector('div.rg_di')(container)
 
     for result in results:
