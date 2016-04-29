@@ -10,11 +10,17 @@
                         <td>Visible Link</td>
                         <td>
                             <a href="{{ctrl.search_result.visible_link}}" style="word-wrap: break-word;" target="blank">{{ctrl.search_result.visible_link}}</a></td>
-                    </tr>
+			</tr>
                     <tr>
                         <td>Direct Link</td>
                         <td>
                             <a href="{{ctrl.search_result.direct_link}}" style="word-wrap: break-word;" target="blank">{{ctrl.search_result.direct_link}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Search</td>
+                        <td>
+                            {{ctrl.search_result.search.name}}
                         </td>
                     </tr>
                 </table>

@@ -3,14 +3,14 @@ from flask.ext.restful import reqparse
 from backend import db
 from backend.api import api
 from backend.models import User, Search, SearchResult
-from google_images_serp_parser import GoogleImagesSERPParser
+import json
 
 
 @api.route('/upload-google-results', methods=['POST'])
 def upload_search_data():
   parser = reqparse.RequestParser()
   parser.add_argument('morphic_id', type=int)
-  parser.add_argument('html')
+  parser.add_argument('results')
   args = parser.parse_args()
 
   search = Search.query.filter(Search.id_==args.morphic_id).first()
@@ -18,12 +18,12 @@ def upload_search_data():
   if search is None:
     abort(404)
 
-  serp_parser = GoogleImagesSERPParser()
+  print(args.results)
 
-  for link, visible_link in serp_parser.parse_serp(args.html):
+  for result in json.loads(args.results):
     search_result = SearchResult(
-      direct_link=unicode(link, 'utf-8'),
-      visible_link=unicode(visible_link, 'utf-8'),
+      direct_link=result['image_link'],
+      visible_link=result['visible_link'],
       search=search,
     )
     db.session.add(search_result)

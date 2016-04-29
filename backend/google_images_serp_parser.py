@@ -1,7 +1,7 @@
 import re
 from urllib import unquote
 from lxml.cssselect import CSSSelector
-from lxml.etree import HTML
+from lxml.etree import HTML, tostring
 
 
 class GoogleImagesSERPParser(object):
@@ -14,7 +14,7 @@ class GoogleImagesSERPParser(object):
 
   def parse_serp(self, html):
     elements = HTML(html)
-    container = CSSSelector('li#isr_mc')(elements)[0]
+    container = CSSSelector('div#isr_mc')(elements)[0]
     results = CSSSelector('div.rg_di')(container)
 
     for result in results:
@@ -24,6 +24,8 @@ class GoogleImagesSERPParser(object):
 
       result_container = result_containers[0]
       result_href = result_container.get('href')
+      if not result_href:
+        continue
 
       double_quoted_link = self.link_re.match(result_href).group(1)
       link = self.double_unquote(double_quoted_link)

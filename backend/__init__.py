@@ -14,6 +14,8 @@ def create_app(environment='dev'):
   app = Flask(__name__)
 
   app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://morphs:dontlook@localhost:5432/prod'
+  app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
 
   db.init_app(app)
 

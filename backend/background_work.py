@@ -1,3 +1,4 @@
+import socket
 from io import BytesIO
 from PIL import Image
 import imagehash
@@ -31,7 +32,7 @@ def do_unscraped_search_result(unscraped_search_result):
 
   try:
     raw_image_response = requests.get(unscraped_search_result.direct_link, timeout=10)
-  except requests.exceptions.RequestException:
+  except requests.exceptions.RequestException, socket.timeout:
     logger.warn("Timout fetching image at url %s." % unscraped_search_result.direct_link)
     done_scraping_image(unscraped_search_result, success=False)
     return

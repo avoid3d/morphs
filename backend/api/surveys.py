@@ -1,5 +1,5 @@
 import json
-import csv
+import unicodecsv
 from flask import send_file
 from flask.ext.restful import marshal_with, reqparse, fields
 from sqlalchemy import func
@@ -16,17 +16,37 @@ def get_survey_results(survey_id):
   # of survey_fields to get survey_field.label by id.
   survey = Survey.query.filter(Survey.id_==survey_id).first()
 
-  field_names = [field.label for field in survey.fields]
+  field_names = ['morphic_id', 'completion_state']
+  for field in survey.fields:
+      label = field.label
+      if field.field_type == 'location':
+          label += " (lat, lon)"
+      field_names.append(label.encode('utf-8'))
+  field_names += ['search_name', 'search_query', 'visible_link', 'direct_link']
 
   f = BytesIO()
 
-  writer = csv.DictWriter(f, field_names)
+  writer = unicodecsv.DictWriter(f, field_names, encoding='utf-8')
   writer.writeheader()
 
   for search_result in survey.search_results:
-    d = {}
+    d = {
+        'morphic_id': search_result.id_,
+        'completion_state': search_result.completion_state,
+        'search_name': search_result.search.name,
+        'search_query': search_result.search.search_query,
+        'visible_link': search_result.visible_link.encode('utf-8'),
+        'direct_link': search_result.direct_link.encode('utf-8'),
+    }
     for result_field in search_result.result_fields:
-      d[result_field.survey_field.label] = result_field.value
+      label = result_field.survey_field.label
+      value = result_field.value
+      if result_field.survey_field.field_type == 'location':
+          location_dict = json.loads(value)
+          value = '%s, %s' % (location_dict['latitude'], location_dict['longitude'])
+          label += " (lat, lon)"
+
+      d[label.encode('utf-8')] = value.encode('utf-8')
     writer.writerow(d)
 
   f.seek(0)

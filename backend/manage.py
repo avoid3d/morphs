@@ -14,8 +14,8 @@ def background_work():
 	do_work()
 
 def _make_context():
-    from backend.models import Survey, User, Session
-    return dict(app=app, db=db, Survey=Survey, User=User, Session=Session)
+    from backend.models import Survey, User, Session, SearchResult
+    return dict(app=app, db=db, Survey=Survey, User=User, Session=Session, SearchResult=SearchResult)
 
 manager.add_command("shell", Shell(make_context=_make_context))
 
