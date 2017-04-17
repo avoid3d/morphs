@@ -1,0 +1,9 @@
+[submodule "chrome-extension"]
+	path = chrome-extension
+	url = git@github.com:morphic-team/chrome-extension.git
+[submodule "website"]
+	path = website
+	url = git@github.com:morphic-team/website.git
+[submodule "backend"]
+	path = backend
+	url = git@github.com:morphic-team/backend.git
