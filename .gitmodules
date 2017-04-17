@@ -7,3 +7,6 @@
 [submodule "backend"]
 	path = backend
 	url = git@github.com:morphic-team/backend.git
+[submodule "research-results"]
+	path = research-results
+	url = git@github.com:morphic-team/research-results.git
