@@ -3,7 +3,8 @@
     <div>
         <div>
             <h2>Overview</h2>
-            <p><b>Work in progress</b>, please contact the author (avoid3d@gmail.com) if you wish to use it.
+            <p>Morphic was developed as a tool to answer ecological questions as part of a study by Leighton et al. (2016)<sup>1</sup>.</p>
+            <p><b>Morphic is a work in progress</b>, please contact the authors (gabi.leighton1@gmail.com, avoid3d@gmail.com) if you wish to use it.
             </p>
             <p>Morphic is a tool that helps you analyse images it capture from Google Images. To use Morphic you first need to determine what information you need from the images. To gather this information you create a survey that will be filled out once for each of the images Morphic has captured.
             </p>
@@ -39,11 +40,12 @@
                 <li>a <b>location</b> field which allows the user to select a location using a map provided by Google Maps API.</li>
                 <span>e.g. <b>Where was this photograph taken?</b></span>
             </ul>
+            <p>Currently there is no way to edit a survey once it is created. This feature is under development. For now, please make sure that your survey is contains all neccesarry fields before clicking 'Create Survey'.</p>
         </div>
         <div>
             <h2>2. Add search results to the survey</h2>
             <p>An <b>important</b> first step is to install the morphic Chrome extension <a href="https://chrome.google.com/webstore/detail/fhigbmfhhlpkjbdamhjmfajhkfbkkgah">available here</a>.</p>
-            <p>Now that you have a survey, you need to gather some images off Google Images. This is done by performing an Google Image search and using each image in the search results page. To do this you 'Add search' on the 'Searches' tab of the survey. When you first make a survey, you will also automatically be navigated to the 'Add search' form. One again you name the search and also optionally provide a descriptive comment. Next enter a 'Search Query'. This will be entered into Google Images when the search is performed. Morphic will actually perform a real image search on your behalf, so you can test out your search query using <a href="https://www.google.com/images?q=Your+Search+Query" target="_blank">Google Images</a>.</p>
+            <p>Now that you have a survey, you need to gather some images from Google Images. This is done by performing an Google Image search and using each image in the search results page. To do this you 'Add search' on the 'Searches' tab of the survey. When you first make a survey, you will also automatically be navigated to the 'Add search' form. One again you name the search and also optionally provide a descriptive comment. Next enter a 'Search Query'. This will be entered into Google Images when the search is performed. Morphic will actually perform a real image search on your behalf, so you can test out your search query using <a href="https://www.google.com/images?q=Your+Search+Query" target="_blank">Google Images</a>.</p>
             <p>Once you have added a search you run it by clicking 'Run Search' which will open Google Images in a new tab. <b>Don't do anything.</b> Morphic will automatically close this tab and return you to your search results when the search is finished.</p>
         </div>
         <div>
@@ -54,7 +56,12 @@
         </p>
         <h2>4. Exporting the raw data</h2>
         <p>Exporting your data is the last step. Once you are satisfied you have gathered enough results go to your survey and navigate to
-	the 'Export Results' tab. Then click the 'Export Results' button which will start a download in your browser. 
+	the 'Export Results' tab. Then click the 'Export Results' button which will start a download in your browser.
 	This file will be a newline delimited csv with your suvery field labels as the header and one row per search result.</p>
     </div>
+	<hr/>
+    <div>
+      1. Gabriella Leighton, Pierre Hugo, Alexandre Roulin and Arjun Amar (2016) 'Just Google it: assessing the use of Google Images to describe geographical variation in visible traits of organisms.' <i>Methods in Ecology and Evolution</i>
+    </div>
 </div>
+

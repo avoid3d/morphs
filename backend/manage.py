@@ -8,6 +8,22 @@ app = create_app('dev')
 manager = Manager(app)
 
 @manager.command
+def dedup():
+  from backend.models import SearchResult, Search, Image
+  search_results = SearchResult.query.filter(SearchResult.image_scraped_state == 'SUCCESS').limit(100).offset(10000).all()
+  for search_result in search_results:
+    duplicate_pool = (
+      SearchResult.query
+      .join(Image)
+      .join(Search)
+      .filter(Search.survey == search_result.search.survey)
+      .filter(Image.image_hash == search_result.image.image_hash)
+      .all()
+    )
+    print(search_result.id_, len(duplicate_pool))
+  
+
+@manager.command
 def background_work():
 	app = create_app('prod')
 	from background_work import do_work

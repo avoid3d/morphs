@@ -18,8 +18,6 @@ def upload_search_data():
   if search is None:
     abort(404)
 
-  print(args.results)
-
   for result in json.loads(args.results):
     search_result = SearchResult(
       direct_link=result['image_link'],

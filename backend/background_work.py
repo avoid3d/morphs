@@ -6,7 +6,7 @@ import requests
 import logging
 import warnings
 from time import sleep
-from backend.models import SearchResult
+from backend.models import SearchResult, Search
 from backend.models import Image as ImageModel
 from backend import db
 
@@ -24,13 +24,14 @@ def done_scraping_image(search_result, success):
   db.session.commit()
 
 def do_unscraped_search_result(unscraped_search_result):
-  logger.info('Processing search_result %s' % unscraped_search_result)
+  logger.info('Processing search_result %s' % unscraped_search_result.id_)
   if not unscraped_search_result.direct_link:
     logger.warn("Search result %s missing link." % unscraped_search_result)
     done_scraping_image(unscraped_search_result, success=False)
     return
 
   try:
+    print(unscraped_search_result.id_)
     raw_image_response = requests.get(unscraped_search_result.direct_link, timeout=10)
   except requests.exceptions.RequestException, socket.timeout:
     logger.warn("Timout fetching image at url %s." % unscraped_search_result.direct_link)
@@ -68,13 +69,30 @@ def do_unscraped_search_result(unscraped_search_result):
     done_scraping_image(unscraped_search_result, success=False)
     return
 
-  done_scraping_image(unscraped_search_result, success=True)
+  duplicate_pool = (
+    SearchResult.query
+    .join(ImageModel)
+    .join(Search)
+    .filter(Search.survey == unscraped_search_result.search.survey)
+    .filter(ImageModel.image_hash == unscraped_search_result.image.image_hash)
+    .all()
+  )
+
+  if (len(duplicate_pool) > 1):
+      logger.warn("Removing duplicate: %s" % unscraped_search_result)
+      db.session.delete(unscraped_search_result)
+      db.session.commit()
+  else:
+    done_scraping_image(unscraped_search_result, success=True)
 
 def do_work():
   while True:
+    from  sqlalchemy.sql.expression import func
+
     unscraped_search_result = (SearchResult
       .query
       .filter(SearchResult.image_scraped_state=='NEW')
+      .order_by(func.random())
       .first())
 
 
