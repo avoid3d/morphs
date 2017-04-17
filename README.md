@@ -1,2 +1,2 @@
-# morphs
-Morphs.io
+# Morphic
+Morphic parent repository.
