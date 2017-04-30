@@ -1,3 +1,6 @@
+# Docker ignore file
+.docker-data
+
 # Mac cruft.
 .DS_Store
 
