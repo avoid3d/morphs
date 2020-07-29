@@ -28,6 +28,12 @@ services:
       - LETSENCRYPT_EMAIL=avoid3d@gmail.com
       - VIRTUAL_HOST=morphs.io
       - VIRTUAL_PORT=8080
+  background_work:
+    build: ../../backend/
+    image: morphic-background-work
+    env_file: ./backend.env
+    restart: always
+    command: python manage.py background_work
   backend:
     build: ../../backend/
     image: morphic-backend
